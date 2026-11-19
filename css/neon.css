@@ -1,0 +1,204 @@
+/* ============ Studia · capa neón + liquid glass ============
+   Se carga la última: solo cambia aspecto, nunca estructura ni lógica. */
+
+/* ---------- Fondo aurora animado ---------- */
+body::before {
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(color-mix(in oklch,var(--text) 5%,transparent) 1px,transparent 1px),
+    linear-gradient(90deg,color-mix(in oklch,var(--text) 5%,transparent) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 20%,transparent 78%);
+  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 20%,transparent 78%);
+}
+.aurora {position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none}
+.aurora i {position:absolute;border-radius:50%;filter:blur(90px);opacity:var(--orb-opacity);will-change:transform}
+.aurora i:nth-child(1) {width:46vmax;height:46vmax;left:-12vmax;top:-14vmax;background:var(--orb-1);animation:drift1 26s ease-in-out infinite alternate}
+.aurora i:nth-child(2) {width:40vmax;height:40vmax;right:-10vmax;top:6vh;background:var(--orb-2);animation:drift2 32s ease-in-out infinite alternate}
+.aurora i:nth-child(3) {width:44vmax;height:44vmax;left:18vw;bottom:-22vmax;background:var(--orb-3);animation:drift3 29s ease-in-out infinite alternate}
+.aurora i:nth-child(4) {width:28vmax;height:28vmax;right:12vw;bottom:-8vmax;background:var(--orb-4);animation:drift1 36s ease-in-out infinite alternate-reverse}
+@keyframes drift1 {to {transform:translate(14vw,10vh) scale(1.15)}}
+@keyframes drift2 {to {transform:translate(-16vw,14vh) scale(.9)}}
+@keyframes drift3 {to {transform:translate(10vw,-12vh) scale(1.2)}}
+
+/* ---------- Superficies liquid glass ---------- */
+.card,.stat,.sidebar,.login-card,.modal,.toast,.notif-banner,.ia-chats-panel {
+  position:relative;
+  background:var(--glass-fill);
+  backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow),inset 0 1px 0 var(--highlight),inset 0 -12px 28px -18px color-mix(in oklch,var(--accent-3) 35%,transparent);
+}
+.sidebar {position:sticky}
+.notif-banner {position:fixed}
+.modal-wrap {backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%)}
+/* borde de luz especular (degradado) */
+.card::after,.stat::after,.sidebar::after,.login-card::after,.modal::after {
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1.2px;pointer-events:none;
+  background:var(--rim);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+}
+/* refracción líquida real (Chromium); el resto de navegadores usa el blur normal */
+@supports (backdrop-filter:url(#liquid-glass)) {
+  .sidebar,.login-card,.modal,.theme-toggle,.notif-banner {
+    backdrop-filter:blur(12px) url(#liquid-glass) saturate(190%) brightness(1.1);
+  }
+}
+.card:hover,.stat:hover {border-color:var(--line-strong)}
+.card {transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
+.card:hover {box-shadow:var(--shadow),0 0 36px color-mix(in oklch,var(--accent-3) calc(var(--neon-a)*38%),transparent),inset 0 1px 0 var(--highlight)}
+
+/* ---------- Tipografía ---------- */
+h1,h2,h3,.brand-name,.stat-value,.login-card h1 {font-family:var(--font-display)}
+.page-head h1,.login-card h1 {
+  font-weight:700;
+  background:linear-gradient(100deg,var(--text) 10%,var(--accent) 55%,var(--accent-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+}
+.page-head p,.login-sub {color:var(--muted)}
+.card h3 {font-size:1.02rem;font-weight:600}
+.stat .stat-label {font-weight:600;letter-spacing:.08em;font-size:.7rem}
+
+/* ---------- Logo / marca ---------- */
+.brand-mark,.login-logo {
+  background:var(--button-fill);color:var(--on-accent);font-family:var(--font-display);
+  border-radius:30%;
+  box-shadow:inset 0 1px 0 var(--highlight),0 0 calc(24px) color-mix(in oklch,var(--accent-2) calc(var(--neon-a)*100%),transparent),0 0 48px color-mix(in oklch,var(--accent) calc(var(--neon-a)*60%),transparent);
+}
+.login-logo {animation:logoPulse 4s ease-in-out infinite}
+@keyframes logoPulse {50% {box-shadow:inset 0 1px 0 var(--highlight),0 0 34px color-mix(in oklch,var(--accent) calc(var(--neon-a)*110%),transparent),0 0 70px color-mix(in oklch,var(--accent-2) calc(var(--neon-a)*80%),transparent)}}
+.login-wrap {position:relative}
+.login-card {border-radius:30px;padding:44px 38px}
+
+/* ---------- Navegación ---------- */
+.sidebar {border-radius:28px}
+.nav a {border-radius:16px;font-weight:500;position:relative}
+.nav a:hover {background:color-mix(in oklch,var(--text) 7%,transparent);color:var(--text);transform:translateX(4px)}
+.nav a.active {
+  color:var(--text);font-weight:600;
+  background:linear-gradient(90deg,color-mix(in oklch,var(--accent) 28%,transparent),color-mix(in oklch,var(--accent-2) 16%,transparent));
+  border-color:color-mix(in oklch,var(--accent) 45%,transparent);
+  box-shadow:inset 0 1px 0 var(--highlight),0 0 calc(22px) color-mix(in oklch,var(--accent) calc(var(--neon-a)*70%),transparent);
+}
+.nav a.active::before {
+  content:'';position:absolute;left:-13px;top:22%;bottom:22%;width:4px;border-radius:4px;
+  background:linear-gradient(var(--accent),var(--accent-2));
+  box-shadow:0 0 14px var(--accent),0 0 28px color-mix(in oklch,var(--accent-2) 60%,transparent);
+}
+.nav-icon {filter:drop-shadow(0 0 6px color-mix(in oklch,var(--accent) calc(var(--neon-a)*100%),transparent))}
+.sidebar-foot {border-radius:18px}
+.sidebar-avatar,.chat-avatar {border:1.5px solid transparent;background:linear-gradient(var(--bg-soft),var(--bg-soft)) padding-box,var(--button-fill) border-box}
+.sidebar-logout:hover {text-shadow:0 0 12px var(--red)}
+
+/* ---------- Botones ---------- */
+.btn {border-radius:14px;font-weight:600;font-family:var(--font);background:var(--glass-fill);border:1px solid var(--line-strong);min-height:40px}
+.btn:hover {color:var(--text);border-color:var(--accent);box-shadow:0 0 22px color-mix(in oklch,var(--accent) calc(var(--neon-a)*65%),transparent),inset 0 1px 0 var(--highlight)}
+.btn.primary,.btn.primary:hover {
+  background:var(--button-fill);background-size:180% 100%;background-position:0 0;border-color:transparent;color:var(--on-accent);
+  box-shadow:0 6px 24px color-mix(in oklch,var(--accent-2) calc(var(--neon-a)*60%),transparent),0 0 30px color-mix(in oklch,var(--accent) calc(var(--neon-a)*45%),transparent),inset 0 1px 0 oklch(1 0 0 / .5);
+  transition:transform .2s,box-shadow .3s,background-position .5s;
+}
+.btn.primary:hover {background-position:100% 0;box-shadow:0 8px 34px color-mix(in oklch,var(--accent-2) calc(var(--neon-a)*95%),transparent),0 0 44px color-mix(in oklch,var(--accent) calc(var(--neon-a)*75%),transparent),inset 0 1px 0 oklch(1 0 0 / .55)}
+.btn.danger {color:var(--red);border-color:color-mix(in oklch,var(--red) 40%,transparent)}
+.btn.danger:hover {color:var(--red);border-color:var(--red);box-shadow:0 0 22px color-mix(in oklch,var(--red) calc(var(--neon-a)*70%),transparent)}
+.theme-toggle {border-radius:50%;color:var(--accent);box-shadow:var(--shadow),0 0 22px color-mix(in oklch,var(--accent) calc(var(--neon-a)*50%),transparent),inset 0 1px 0 var(--highlight)}
+
+/* ---------- Métricas ---------- */
+.stat {border-radius:24px;overflow:hidden}
+.stat::before {
+  content:'';position:absolute;width:140px;height:140px;right:-50px;top:-60px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,color-mix(in oklch,var(--c,var(--accent)) calc(var(--neon-a)*80%),transparent),transparent 70%);
+}
+.stat:nth-child(1) {--c:var(--accent)} .stat:nth-child(2) {--c:var(--accent-2)}
+.stat:nth-child(3) {--c:var(--accent-3)} .stat:nth-child(4) {--c:var(--green)}
+.stat .stat-value,.stat:nth-child(n) .stat-value {
+  font-size:2.5rem;font-weight:700;line-height:1;
+  background:linear-gradient(120deg,var(--c,var(--accent)),color-mix(in oklch,var(--c,var(--accent)) 55%,var(--text)));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
+  filter:drop-shadow(0 0 14px color-mix(in oklch,var(--c,var(--accent)) calc(var(--neon-a)*100%),transparent));
+}
+
+/* ---------- Formularios ---------- */
+input,select,textarea,.login-input {
+  border-radius:14px;background:color-mix(in oklch,var(--bg) 35%,transparent);border:1px solid var(--line-strong);
+  box-shadow:inset 0 2px 8px color-mix(in oklch,var(--bg) 40%,transparent);
+}
+input:focus,select:focus,textarea:focus,.login-input:focus {border-color:var(--accent);box-shadow:var(--glow)}
+input[type=checkbox],input[type=radio] {accent-color:var(--accent-2)}
+
+/* ---------- Insignias ---------- */
+.badge {box-shadow:0 0 14px color-mix(in oklch,currentColor calc(var(--neon-a)*40%),transparent);letter-spacing:.05em}
+
+/* ---------- Tablas ---------- */
+th {color:var(--accent)}
+tr:hover td {background:color-mix(in oklch,var(--accent) 8%,transparent)}
+
+/* ---------- Chat e IA ---------- */
+.chat-bubble {border-radius:20px 20px 20px 6px;background:var(--glass-fill)}
+.chat-msg.mine .chat-bubble,.ia-bubble.user {
+  border-radius:20px 20px 6px 20px;color:var(--text);
+  background:linear-gradient(135deg,color-mix(in oklch,var(--accent) 34%,transparent),color-mix(in oklch,var(--accent-3) 34%,transparent) 55%,color-mix(in oklch,var(--accent-2) 30%,transparent));
+  border-color:color-mix(in oklch,var(--accent) 50%,transparent);
+  box-shadow:0 6px 24px color-mix(in oklch,var(--accent-3) calc(var(--neon-a)*50%),transparent),inset 0 1px 0 var(--highlight);
+}
+.chat-nick {color:var(--accent-2);font-weight:600}
+.chat-attach {border-radius:14px}
+.chat-attach:hover {box-shadow:0 0 18px color-mix(in oklch,var(--accent) calc(var(--neon-a)*70%),transparent)}
+.ia-dot {background:linear-gradient(var(--accent),var(--accent-2))}
+.ia-action {border-radius:10px}
+.ia-chat-item {border-radius:12px}
+.ia-chat-item.active {background:color-mix(in oklch,var(--accent) 18%,transparent);color:var(--text);box-shadow:inset 3px 0 0 var(--accent)}
+
+/* ---------- Calendario y horario ---------- */
+.cal-day {border-radius:16px;background:var(--glass-fill)}
+.cal-day:hover {border-color:var(--accent)}
+.cal-day.today {
+  border-color:var(--accent);
+  background:linear-gradient(160deg,color-mix(in oklch,var(--accent) 22%,transparent),color-mix(in oklch,var(--accent-2) 10%,transparent));
+  box-shadow:0 0 calc(26px) color-mix(in oklch,var(--accent) calc(var(--neon-a)*75%),transparent),inset 0 1px 0 var(--highlight);
+}
+.cal-day.today .cal-day-head {color:var(--accent);font-weight:700}
+.cal-event {
+  color:var(--text);border-radius:8px;border-color:color-mix(in oklch,var(--accent-2) 45%,transparent);
+  background:linear-gradient(90deg,color-mix(in oklch,var(--accent-2) 32%,transparent),color-mix(in oklch,var(--accent-3) 20%,transparent));
+}
+.sched-slot {border-radius:14px;background:var(--glass-fill)}
+.sched-slot:hover {border-color:var(--accent);box-shadow:0 0 16px color-mix(in oklch,var(--accent) calc(var(--neon-a)*50%),transparent)}
+.sched-slot.filled {border-color:color-mix(in oklch,var(--green) 55%,transparent);box-shadow:0 0 18px color-mix(in oklch,var(--green) calc(var(--neon-a)*35%),transparent)}
+.sched-day-head {color:var(--accent);letter-spacing:.06em;text-transform:uppercase}
+
+/* ---------- Asignaturas y tests ---------- */
+.subject-card {border-radius:24px}
+.subject-card:hover {border-color:var(--accent);transform:translateY(-6px);box-shadow:var(--shadow),0 0 40px color-mix(in oklch,var(--accent) calc(var(--neon-a)*60%),transparent),0 0 70px color-mix(in oklch,var(--accent-2) calc(var(--neon-a)*35%),transparent),inset 0 1px 0 var(--highlight)}
+.test-opt {border-radius:14px}
+.test-opt:hover {border-color:var(--accent);box-shadow:0 0 16px color-mix(in oklch,var(--accent) calc(var(--neon-a)*50%),transparent)}
+.test-opt.correct {box-shadow:0 0 22px color-mix(in oklch,var(--green) calc(var(--neon-a)*70%),transparent)}
+.test-opt.wrong {box-shadow:0 0 22px color-mix(in oklch,var(--red) calc(var(--neon-a)*70%),transparent)}
+.diff-tag {text-shadow:0 0 14px currentColor}
+
+/* ---------- Avisos ---------- */
+.toast {border-radius:16px;border-left:3px solid var(--green);box-shadow:var(--shadow),0 0 20px color-mix(in oklch,var(--green) calc(var(--neon-a)*45%),transparent)}
+.toast.error {border-left-color:var(--red);box-shadow:var(--shadow),0 0 20px color-mix(in oklch,var(--red) calc(var(--neon-a)*45%),transparent)}
+.notif-banner {border-radius:18px;border:1px solid var(--accent);box-shadow:var(--shadow),0 0 30px color-mix(in oklch,var(--accent) calc(var(--neon-a)*70%),transparent)}
+.modal {border-radius:28px;border-color:var(--line-strong)}
+.modal h3 {font-size:1.15rem}
+
+/* ---------- Entrada escalonada de tarjetas ---------- */
+.grid > :nth-child(2) {animation-delay:.06s} .grid > :nth-child(3) {animation-delay:.12s} .grid > :nth-child(4) {animation-delay:.18s}
+
+/* ---------- Móvil: efectos más ligeros ---------- */
+@media (max-width:760px) {
+  .aurora i {filter:blur(60px)}
+  .sidebar {border-radius:0 0 26px 26px;position:relative}
+  .nav a.active::before {display:none}
+  .login-card {padding:32px 24px;border-radius:26px}
+  .stat .stat-value,.stat:nth-child(n) .stat-value {font-size:2.1rem}
+  .card::after,.stat::after,.sidebar::after {display:none}
+  @supports (backdrop-filter:url(#liquid-glass)) {
+    .sidebar,.login-card,.modal,.theme-toggle,.notif-banner {backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur)}
+  }
+}
+@media (prefers-reduced-motion:reduce) {.aurora i,.login-logo {animation:none!important}}
+@supports not (backdrop-filter:blur(1px)) {.card,.sidebar,.login-card,.modal,.stat {background:var(--bg-soft)}}

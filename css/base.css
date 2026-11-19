@@ -1,0 +1,54 @@
+/* ============ Studia · tokens visuales (neón + liquid glass) ============ */
+:root {
+  color-scheme: dark;
+  --bg: oklch(.13 .035 280); --bg-soft: oklch(.18 .045 285); --bg-card: oklch(.22 .05 285 / .62);
+  --glass: oklch(.32 .06 285 / .26); --glass-strong: oklch(.2 .05 285 / .88);
+  --line: oklch(.92 .05 250 / .14); --line-strong: oklch(.9 .1 230 / .36);
+  --text: oklch(.97 .01 260); --muted: oklch(.77 .035 268);
+  --accent: oklch(.86 .15 205);      /* cian neón */
+  --accent-2: oklch(.68 .26 330);    /* magenta neón */
+  --accent-3: oklch(.72 .2 290);     /* violeta neón */
+  --green: oklch(.87 .24 150); --red: oklch(.7 .24 18); --yellow: oklch(.89 .17 100);
+  --radius: 22px; --blur: blur(22px) saturate(180%) brightness(1.08);
+  --shadow: 0 18px 50px oklch(.05 .03 280 / .5);
+  --glow: 0 0 0 3px color-mix(in oklch, var(--accent) 22%, transparent), 0 0 24px color-mix(in oklch, var(--accent) 38%, transparent);
+  --font: 'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-display: 'Space Grotesk','Inter','Segoe UI',system-ui,sans-serif;
+  --mono: ui-monospace,'JetBrains Mono',monospace;
+  --on-accent: oklch(.14 .04 280); --highlight: oklch(1 0 0 / .18);
+  --mine: oklch(.5 .18 300 / .38); --selection: oklch(.55 .2 300); --overlay: oklch(.08 .03 280 / .66);
+  --canvas-glow: transparent;
+  --neon-a: .55;  /* intensidad de los brillos */
+  --orb-1: oklch(.62 .25 300); --orb-2: oklch(.72 .17 205); --orb-3: oklch(.64 .27 335); --orb-4: oklch(.7 .2 255);
+  --orb-opacity: .55;
+  --button-fill: linear-gradient(120deg, var(--accent) 0%, var(--accent-3) 55%, var(--accent-2) 100%);
+  --rim: linear-gradient(145deg, oklch(1 0 0 / .55), oklch(1 0 0 / .08) 28%, oklch(1 0 0 / .02) 60%, color-mix(in oklch, var(--accent) 55%, transparent));
+  --glass-fill: linear-gradient(145deg, oklch(1 0 0 / .14), oklch(1 0 0 / .02) 42%, oklch(1 0 0 / .05)), var(--glass);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: oklch(.955 .025 290); --bg-soft: oklch(.935 .035 290); --bg-card: oklch(1 0 0 / .62);
+  --glass: oklch(1 0 0 / .46); --glass-strong: oklch(.99 .01 290 / .92);
+  --line: oklch(.4 .08 290 / .14); --line-strong: oklch(.5 .15 290 / .3);
+  --text: oklch(.25 .05 285); --muted: oklch(.46 .05 285);
+  --accent: oklch(.56 .18 225); --accent-2: oklch(.58 .26 340); --accent-3: oklch(.54 .24 292);
+  --green: oklch(.5 .17 155); --red: oklch(.56 .24 20); --yellow: oklch(.55 .15 75);
+  --mine: oklch(.88 .07 300 / .7); --selection: oklch(.86 .1 300); --overlay: oklch(.25 .05 285 / .4);
+  --on-accent: oklch(.99 0 0); --highlight: oklch(1 0 0 / .85);
+  --shadow: 0 18px 50px oklch(.4 .1 290 / .16);
+  --neon-a: .22; --orb-opacity: .5;
+  --orb-1: oklch(.82 .14 300); --orb-2: oklch(.85 .12 215); --orb-3: oklch(.84 .14 340); --orb-4: oklch(.86 .1 250);
+  --rim: linear-gradient(145deg, oklch(1 0 0 / .95), oklch(1 0 0 / .3) 30%, oklch(1 0 0 / .1) 60%, color-mix(in oklch, var(--accent-3) 45%, transparent));
+  --glass-fill: linear-gradient(145deg, oklch(1 0 0 / .7), oklch(1 0 0 / .18) 45%, oklch(1 0 0 / .3)), var(--glass);
+}
+* {margin:0;padding:0;box-sizing:border-box;letter-spacing:0}
+html {font-size:16px;-webkit-font-smoothing:antialiased}
+body {font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;line-height:1.5}
+@keyframes fadeUp {from {opacity:0;transform:translateY(8px)} to {opacity:1;transform:translateY(0)}}
+::selection {background:var(--selection)}
+::-webkit-scrollbar {width:8px;height:8px}
+::-webkit-scrollbar-track {background:transparent}
+::-webkit-scrollbar-thumb {background:linear-gradient(var(--accent),var(--accent-2));border-radius:8px;border:2px solid transparent;background-clip:padding-box}
+button,input,select,textarea {font-family:var(--font)}
+a {color:var(--accent);text-decoration:none}
+:focus-visible {outline:2px solid var(--accent);outline-offset:3px}

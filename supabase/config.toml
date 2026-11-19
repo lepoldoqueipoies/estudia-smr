@@ -1,0 +1,7 @@
+project_id = "studia-github-pages"
+
+[functions.app-api]
+verify_jwt = false
+
+[functions.ai]
+verify_jwt = false
